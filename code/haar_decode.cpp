@@ -3,43 +3,50 @@ using namespace std;
 
 namespace haar_decode
 {
- void haar_integer_decode(std::string code)
+ void haar_integer_decode(std::list<int>& final_numbers ,std::string code)
  {
      std::list<int> numbers;
     binary_to_numbers(code,numbers); 
-    std::list<int> original_numbers =haar_integer_get_numbers(numbers);
-    printf("finish");
-    
-
+    print_list(numbers);
+    haar_integer_get_numbers(final_numbers,numbers);
+  
  }
- void haar_new_trasform_decode(std::string code)
+ void haar_new_trasform_decode(std::list<int>& final_numbers,std::string code)
  {
-     std::list<int> numbers;
-     binary_to_numbers(code,numbers);
-     std::list<int> original_numbers;
-     printf("finish");
+    std::list<int> numbers;
+    binary_to_numbers(code,numbers);
+    print_list(numbers);
+    haar_new_trasform_get_numbers(final_numbers,numbers);
+  
+     
  }
-  std::list<int>& haar_integer_get_numbers(std::list<int> & numbers)
+  void haar_integer_get_numbers(std::list<int>& final_numbers ,std::list<int> & numbers)
  {
     std::list<int> cur_numbers ;
-    cur_numbers.push_back(numbers.front());
+    int first = numbers.front();
+    cur_numbers.push_back(first);
     int num_count = (numbers.size()-1)/2;
     int max = find_k_size(num_count);
     int i =1,size_k=0;
-    return haar_integer_get_numbers_inner(numbers,cur_numbers,i,size_k,max);
-  
+    haar_integer_get_numbers_inner(final_numbers,numbers,cur_numbers,i,size_k,max);
+
  }
-  std::list<int>& haar_integer_get_numbers_inner(std::list<int> & numbers,std::list<int>& cur_numbers, int index ,int size_k, int max)
+  void haar_integer_get_numbers_inner(std::list<int>& final_numbers ,std::list<int> & numbers,std::list<int>& cur_numbers1, int index ,int size_k, int max)
  {
+     
      if (size_k== max)
      {
-         return cur_numbers;
+        for (auto itr = cur_numbers1.begin(); itr != cur_numbers1.end(); itr++)
+        {
+             final_numbers.push_front(*itr);
+        }
+        return;
      }
      std::list<int> cur_numbers2 ;
-     int diff,cur_num,num1,num2;
+     int diff,cur_num,num1,num2,cur_bignum;
      list<int>::iterator it = numbers.begin();
      advance(it, index);
-     list<int>::iterator it2 = cur_numbers.begin();
+     list<int>::iterator it2 = cur_numbers1.begin();
      advance(it2, 0);
  for (size_t i = 0; i < pow(2,size_k); i++)
  {
@@ -47,30 +54,35 @@ namespace haar_decode
     it++;
     cur_num = *it;
     it++;
-    num1 = *it2 + diff + cur_num;
-    num2 = *it2 - cur_num;
-    cur_numbers2.push_back(num1);
+    cur_bignum = *it2;
+    num1 = cur_bignum + diff + cur_num;
+    num2 = cur_bignum -diff;
     cur_numbers2.push_back(num2);
+    cur_numbers2.push_back(num1);
     it2++;
  }
  index = index + pow(2,size_k)*2;
-return haar_integer_get_numbers_inner(numbers,cur_numbers2,index,size_k+1,max);
+ haar_integer_get_numbers_inner(final_numbers,numbers,cur_numbers2,index,size_k+1,max);
  
  }
-  std::list<int>& haar_new_trasform_get_numbers(std::list<int> numbers)
+  void haar_new_trasform_get_numbers(std::list<int>& final_numbers,std::list<int> numbers)
  {
  std::list<int> cur_numbers ;
     cur_numbers.push_back(numbers.front());
     int num_count = (numbers.size()-1);
     int max = find_k_size(num_count);
     int i =1,size_k=0;
-    return haar_new_trasform_get_numbers_inner(numbers,cur_numbers,i,size_k,max);
+    haar_new_trasform_get_numbers_inner(final_numbers,numbers,cur_numbers,i,size_k,max);
  }
-   std::list<int>& haar_new_trasform_get_numbers_inner(std::list<int> & numbers,std::list<int>& cur_numbers, int index ,int size_k, int max)
+void haar_new_trasform_get_numbers_inner(std::list<int>& final_numbers,std::list<int> & numbers,std::list<int>& cur_numbers, int index ,int size_k, int max)
  {
      if (size_k== max)
      {
-         return cur_numbers;
+            for (auto itr = cur_numbers.begin(); itr != cur_numbers.end(); itr++)
+        {
+             final_numbers.push_front(*itr);
+        }
+        return;
      }
      std::list<int> cur_numbers2 ;
      int cur_num,num1,num2;
@@ -82,14 +94,15 @@ return haar_integer_get_numbers_inner(numbers,cur_numbers2,index,size_k+1,max);
  {
     cur_num = *it;
     it++;
-    num1 = ceil(*it2/2)  + cur_num;
-    num2 = *it2/2 - cur_num;
-    cur_numbers2.push_back(num1);
+    int big_num = *it2;
+    num1 = ceil((double(big_num))/2)  + cur_num;
+    num2 = big_num/2 - cur_num;
     cur_numbers2.push_back(num2);
+    cur_numbers2.push_back(num1);
     it2++;
  }
  index = index + pow(2,size_k);
-return haar_new_trasform_get_numbers_inner(numbers,cur_numbers2,index,size_k+1,max);
+ haar_new_trasform_get_numbers_inner(final_numbers, numbers,cur_numbers2,index,size_k+1,max);
  
  }
  void binary_to_numbers(std::string code, std::list<int>& numbers)
@@ -124,13 +137,15 @@ return haar_new_trasform_get_numbers_inner(numbers,cur_numbers2,index,size_k+1,m
  int binary_decode(std::string code, int index,int c_del_size)
  {
   int num = pow(2,c_del_size);
-  for (size_t i = c_del_size-1; i >= 0; i--)
+  int j =c_del_size-1;
+  while ( j>=0)
   {
       if(code[index] == '1')
       {
-          num += pow(2,i);
+          num += pow(2,j);
       }
       index++;
+      j=j-1;
   }
   return num;
  }
@@ -150,12 +165,10 @@ return haar_new_trasform_get_numbers_inner(numbers,cur_numbers2,index,size_k+1,m
  {
      std::list<int>::iterator it;
      for (it = numbers.begin(); it != numbers.end(); it++)
-{
-    // Access the object through iterator
-    // int num = it*;
-    
-    //Print the contents
-    // std::cout << num << "," << std::endl;
-}
+   {
+    int num  = *it;
+    std::cout << num << "," ;
+   }
+   std::cout  << std::endl;
  }
 }
