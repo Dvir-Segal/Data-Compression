@@ -7,8 +7,8 @@
 #include <fstream>
 #include <bits/stdc++.h>
 using namespace std;
-#define SIZE 2
-#define K_SIZE 1
+#define SIZE 8
+#define K_SIZE 3
 #define LOOP 1000
 #define NUM_LIM 10000
 
@@ -56,7 +56,9 @@ int main()
     run_rand(score);
     ofstream myfile;
     std::string file_name , content;
-    file_name = to_string(SIZE) +  "_arg_" ; 
+    std::string algo_name;
+    algo_name = "c_delta";
+    file_name = to_string(SIZE) +  "_arg_"  + algo_name; 
     myfile.open (file_name);
     content = to_string(score[0]) + "," + to_string(score[1]) + "," + to_string(score[2]) + "," + to_string(score[3]) + "," + to_string(score[4]) ;
      //exception handling
