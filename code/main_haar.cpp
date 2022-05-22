@@ -1,5 +1,7 @@
 
 #include "haar_c_delta.hpp"
+#include "haar_binary.hpp"
+#include "haar_unary.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -21,7 +23,7 @@ void get_rand_numbers(int cur_numbers[])
     }
 }
 
-void run_rand(int score[])
+void run_rand(long score[])
 {
     for (int i = 0; i < LOOP; i++)
     {
@@ -32,10 +34,10 @@ void run_rand(int score[])
         array and the length n upto which we want the array to
          be sorted*/
         sort(cur_numbers, cur_numbers + n ,greater<int>());
-        string haar_in_ans = haar_algorithm::haar_integer(cur_numbers, K_SIZE);
-        string haar_trn_ans = haar_algorithm::haar_new_trasform(cur_numbers, K_SIZE);
-        score[3] = score[3] + haar_in_ans.size();
-        score[4] = score[4] + haar_trn_ans.size();
+        string haar_in_ans = haar_unary::haar_integer_unary(cur_numbers,K_SIZE);
+        string haar_trn_ans = haar_unary::haar_new_trasform_unary(cur_numbers,K_SIZE);
+        // score[3] = score[3] + haar_in_ans.size();
+        // score[4] = score[4] + haar_trn_ans.size();
         if (haar_in_ans.size() < haar_trn_ans.size())
         {
             score[0] = score[0] + 1;
@@ -52,7 +54,7 @@ void run_rand(int score[])
 }
 int main()
 {
-    int score[5] = {0, 0, 0, 0, 0};
+    long score[5] = {0, 0, 0, 0, 0};
     run_rand(score);
     ofstream myfile;
     std::string file_name , content;

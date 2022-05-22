@@ -1,4 +1,4 @@
-#include "haar_c_delta.hpp"
+#include "haar_unary.hpp"
 using namespace std;
 
 namespace haar_unary
@@ -57,14 +57,10 @@ namespace haar_unary
       int seconed = (*it).second;
       if(first!=-1)
       {
-        cout<<first<<endl;
         string unary_first = unary_coding(first);
-        cout<<unary_first<<endl;
         code_of_nums = unary_first + code_of_nums ;
       }
-      cout<<seconed<<endl;
       string unary_seconed = unary_coding(seconed);
-       cout<<unary_seconed<<endl;
       code_of_nums =  unary_seconed + code_of_nums;
     }
     return code_of_nums;
@@ -114,9 +110,7 @@ namespace haar_unary
         for (std::list<int>::iterator it = listdifrence.begin(); it != listdifrence.end(); ++it)
     {
       int first = *it;
-         cout<<first<<endl;
       string unary_first = unary_coding(first);
-         cout<<unary_first<<endl;
         code_of_nums = unary_first +  code_of_nums;
     }
     return code_of_nums;
