@@ -11,7 +11,7 @@
 using namespace std;
 #define SIZE 8
 #define K_SIZE 3
-#define LOOP 1000
+#define LOOP 100000
 #define NUM_LIM 10000
 
 void get_rand_numbers(int cur_numbers[])
@@ -34,10 +34,10 @@ void run_rand(long score[])
         array and the length n upto which we want the array to
          be sorted*/
         sort(cur_numbers, cur_numbers + n ,greater<int>());
-        string haar_in_ans = haar_unary::haar_integer_unary(cur_numbers,K_SIZE);
-        string haar_trn_ans = haar_unary::haar_new_trasform_unary(cur_numbers,K_SIZE);
-        // score[3] = score[3] + haar_in_ans.size();
-        // score[4] = score[4] + haar_trn_ans.size();
+        string haar_in_ans = haar_algorithm::haar_integer(cur_numbers,K_SIZE);
+        string haar_trn_ans = haar_algorithm::haar_new_trasform(cur_numbers,K_SIZE);
+        score[3] = score[3] + haar_in_ans.size();
+        score[4] = score[4] + haar_trn_ans.size();
         if (haar_in_ans.size() < haar_trn_ans.size())
         {
             score[0] = score[0] + 1;
@@ -59,8 +59,7 @@ int main()
     ofstream myfile;
     std::string file_name , content;
     std::string algo_name;
-    algo_name = "c_delta";
-    file_name = to_string(SIZE) +  "_arg_"  + algo_name; 
+    file_name = to_string(SIZE) +  "_arg"  ; 
     myfile.open (file_name);
     content = to_string(score[0]) + "," + to_string(score[1]) + "," + to_string(score[2]) + "," + to_string(score[3]) + "," + to_string(score[4]) ;
      //exception handling

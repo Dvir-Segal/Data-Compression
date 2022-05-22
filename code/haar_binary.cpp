@@ -57,14 +57,10 @@ namespace haar_binary
       int seconed = (*it).second;
       if(first!=-1)
       {
-        cout<<first<<endl;
         string bin_first = binary_coding(first);
-        cout<<bin_first<<endl;
         code_of_nums = bin_first + code_of_nums ;
       }
-      cout<<seconed<<endl;
       string bin_seconed = binary_coding(seconed);
-       cout<<bin_seconed<<endl;
       code_of_nums =  bin_seconed + code_of_nums;
     }
     return code_of_nums;
@@ -114,9 +110,7 @@ namespace haar_binary
         for (std::list<int>::iterator it = listdifrence.begin(); it != listdifrence.end(); ++it)
     {
       int first = *it;
-         cout<<first<<endl;
       string bin_first = binary_coding(first);
-         cout<<bin_first<<endl;
         code_of_nums = bin_first +  code_of_nums;
     }
     return code_of_nums;

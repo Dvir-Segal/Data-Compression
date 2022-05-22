@@ -57,14 +57,10 @@ namespace haar_algorithm
       int seconed = (*it).second;
       if(first!=-1)
       {
-        cout<<first<<endl;
         string c_delta_first = c_delta_coding(first);
-        cout<<c_delta_first<<endl;
         code_of_nums = c_delta_first + code_of_nums ;
       }
-      cout<<seconed<<endl;
       string c_delta_seconed = c_delta_coding(seconed);
-       cout<<c_delta_seconed<<endl;
       code_of_nums =  c_delta_seconed + code_of_nums;
     }
     return code_of_nums;
@@ -114,9 +110,7 @@ namespace haar_algorithm
         for (std::list<int>::iterator it = listdifrence.begin(); it != listdifrence.end(); ++it)
     {
       int first = *it;
-         cout<<first<<endl;
       string c_delta_first = c_delta_coding(first);
-         cout<<c_delta_first<<endl;
         code_of_nums = c_delta_first +  code_of_nums;
     }
     return code_of_nums;
