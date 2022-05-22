@@ -1,9 +1,9 @@
-#include "haar_binary.hpp"
+#include "haar_c_delta.hpp"
 using namespace std;
 
-namespace haar_binary
+namespace haar_unary
 {
-  std::string haar_integer_bin(int *arr, int k2pow)
+  std::string haar_integer_unary(int *arr, int k2pow)
   {
     std::list<std::pair<int, int>> listofpairs;
     std::list<int> curnums;
@@ -14,11 +14,11 @@ namespace haar_binary
       curnums.push_back(cur_num);
     }
  
-    inner_haar_integer_bin(curnums, k2pow, listofpairs);
-    string final_msg = haar_integer_bin_code(listofpairs);
+    inner_haar_integer_unary(curnums, k2pow, listofpairs);
+    string final_msg = haar_integer_unary_code(listofpairs);
     return final_msg;
   }
-  void inner_haar_integer_bin(std::list<int>& curnums, int k2pow, std::list<std::pair<int, int>>&listofpairs)
+  void inner_haar_integer_unary(std::list<int>& curnums, int k2pow, std::list<std::pair<int, int>>&listofpairs)
   {
     std::list<int> znumbers;
     for (std::list<int>::iterator it = curnums.begin(); it != curnums.end(); ++it)
@@ -45,10 +45,10 @@ namespace haar_binary
     }
     else
     {
-      inner_haar_integer_bin(znumbers, k2pow - 1, listofpairs);
+      inner_haar_integer_unary(znumbers, k2pow - 1, listofpairs);
     }
   }
-  std::string haar_integer_bin_code(std::list<std::pair<int, int>> &listofpairs)
+  std::string haar_integer_unary_code(std::list<std::pair<int, int>> &listofpairs)
   {
     string code_of_nums = "";
         for (std::list<std::pair<int, int>>::iterator it = listofpairs.begin(); it != listofpairs.end(); ++it)
@@ -58,19 +58,19 @@ namespace haar_binary
       if(first!=-1)
       {
         cout<<first<<endl;
-        string bin_first = binary_coding(first);
-        cout<<bin_first<<endl;
-        code_of_nums = bin_first + code_of_nums ;
+        string unary_first = unary_coding(first);
+        cout<<unary_first<<endl;
+        code_of_nums = unary_first + code_of_nums ;
       }
       cout<<seconed<<endl;
-      string bin_seconed = binary_coding(seconed);
-       cout<<bin_seconed<<endl;
-      code_of_nums =  bin_seconed + code_of_nums;
+      string unary_seconed = unary_coding(seconed);
+       cout<<unary_seconed<<endl;
+      code_of_nums =  unary_seconed + code_of_nums;
     }
     return code_of_nums;
   }
 
-  std::string haar_new_trasform_bin(int *arr, int k2pow)
+  std::string haar_new_trasform_unary(int *arr, int k2pow)
   {
     std::list<int> listdifrence;
     std::list<int> curnums;
@@ -81,11 +81,11 @@ namespace haar_binary
       curnums.push_back(cur_num);
     }
 
-    inner_haar_new_trasform_bin(curnums, k2pow, listdifrence);
-    string final_massage = haar_new_trans_bin_code(listdifrence);
+    inner_haar_new_trasform_unary(curnums, k2pow, listdifrence);
+    string final_massage = haar_new_trans_unary_code(listdifrence);
     return final_massage;
   }
-  void inner_haar_new_trasform_bin(std::list<int>& curnums, int k2pow, std::list<int>& listdifrence)
+  void inner_haar_new_trasform_unary(std::list<int>& curnums, int k2pow, std::list<int>& listdifrence)
   {
     std::list<int> znumbers;
     for (std::list<int>::iterator it = curnums.begin(); it != curnums.end(); ++it)
@@ -105,43 +105,31 @@ namespace haar_binary
     }
     else
     {
-      inner_haar_new_trasform_bin(znumbers, k2pow - 1, listdifrence);
+      inner_haar_new_trasform_unary(znumbers, k2pow - 1, listdifrence);
     }
   }
-    std::string haar_new_trans_bin_code(std::list<int>& listdifrence)
+    std::string haar_new_trans_unary_code(std::list<int>& listdifrence)
   {
     string code_of_nums = "";
         for (std::list<int>::iterator it = listdifrence.begin(); it != listdifrence.end(); ++it)
     {
       int first = *it;
          cout<<first<<endl;
-      string bin_first = binary_coding(first);
-         cout<<bin_first<<endl;
-        code_of_nums = bin_first +  code_of_nums;
+      string unary_first = unary_coding(first);
+         cout<<unary_first<<endl;
+        code_of_nums = unary_first +  code_of_nums;
     }
     return code_of_nums;
   }
-  string binary_coding(int num)
+  string unary_coding(int num)
   {
-    if (num == 0)
+    num = num +1;
+    string word;
+    for (int i = 1; i < num; i++)
     {
-      return "0";
+      word.push_back('0');
     }
-    string word ="";
-    while (num != 1)
-    {
-      if (num % 2 == 0)
-      {
-        word = "0" + word;
-      }
-      else
-        {
-          word = "1" + word;
-        }
-        num = num/2;
-    }
-    word = "1" + word;
+    word.push_back('1');
     return word;
   }
-
 }
