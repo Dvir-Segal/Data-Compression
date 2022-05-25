@@ -53,7 +53,7 @@ void run_rand(long score[])
     }
 }
 int main()
-{
+{ 
     long score[5] = {0, 0, 0, 0, 0};
     run_rand(score);
     ofstream myfile;
