@@ -1,5 +1,6 @@
 
 #include "haar_c_delta.hpp"
+#include "haar_c_gamma.hpp"
 #include "haar_binary.hpp"
 #include "haar_unary.hpp"
 #include <iostream>
