@@ -10,8 +10,8 @@
 #include <fstream>
 #include <bits/stdc++.h>
 using namespace std;
-#define SIZE 8
-#define K_SIZE 3
+#define SIZE 4
+#define K_SIZE 2
 #define LOOP 100000
 #define NUM_LIM 10000
 
@@ -35,8 +35,8 @@ void run_rand(long score[])
         array and the length n upto which we want the array to
          be sorted*/
         sort(cur_numbers, cur_numbers + n ,greater<int>());
-        string haar_in_ans = haar_algorithm::haar_integer(cur_numbers,K_SIZE);
-        string haar_trn_ans = haar_algorithm::haar_new_trasform(cur_numbers,K_SIZE);
+        string haar_in_ans = haar_c_gamma::haar_integer_c_gamma(cur_numbers,K_SIZE);
+        string haar_trn_ans = haar_c_gamma::haar_new_trasform_c_gamma(cur_numbers,K_SIZE);
         score[3] = score[3] + haar_in_ans.size();
         score[4] = score[4] + haar_trn_ans.size();
         if (haar_in_ans.size() < haar_trn_ans.size())
