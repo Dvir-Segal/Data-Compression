@@ -3,6 +3,7 @@
 #include "haar_c_gamma.hpp"
 #include "haar_binary.hpp"
 #include "haar_unary.hpp"
+#include "haar_fibo.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
